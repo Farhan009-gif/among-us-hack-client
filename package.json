@@ -1,0 +1,16 @@
+{
+  "name": "among-us-hack-client",
+  "version": "1.0.0",
+  "description": "Mobile game hack client for Among Us with premium features",
+  "main": "js/app.js",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -c-1",
+    "build": "echo 'No build step — pure HTML/CSS/JS'",
+    "test": "echo 'Tests coming soon' && exit 0"
+  },
+  "keywords": ["among-us", "hack-client", "mobile", "esp", "premium"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
