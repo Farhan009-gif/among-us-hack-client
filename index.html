@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Among Us Hack Client</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Material Icons for the game feel -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+<!-- Top Status Bar -->
+<header class="status-bar">
+  <div class="logo">🚀 Hack Client v1.0</div>
+  <button id="premiumBtn" class="badge-premium">
+    <span class="material-icons-outlined">diamond</span> PREMIUM
+  </button>
+</header>
+
+<!-- Main Game Preview Area -->
+<main class="game-preview">
+  <div class="preview-canvas" id="canvasArea">
+    <!-- Simulated crewmates will appear here -->
+    <div class="crewmate red active">🔴</div>
+    <div class="crewmate blue">🔵</div>
+    <div class="crewmate green ghost-mode hidden">🟢</div>
+  </div>
+  <div class="preview-label">Game Preview (Simulated)</div>
+
+  <!-- Connection Status -->
+  <div class="connection-status">
+    <span id="statusDot" class="dot online"></span>
+    <span id="statusText">Connected</span>
+  </div>
+</main>
+
+<!-- Quick Toggles (Bottom Sheet) -->
+<section class="quick-toggles">
+  <h3>⚡ Quick Hacks</h3>
+  <div class="toggle-grid" id="freeToggles">
+    <!-- Speed Boost -->
+    <label class="hack-toggle">
+      <input type="checkbox" id="speedToggle" />
+      <span class="toggle-slider"></span>
+      <span class="material-icons-outlined toggle-icon">bolt</span>
+      <span class="toggle-label">Speed</span>
+      <span class="toggle-value" id="speedValue">1.5x</span>
+    </label>
+
+    <!-- ESP / Fog of War -->
+    <label class="hack-toggle">
+      <input type="checkbox" id="espToggle" />
+      <span class="toggle-slider"></span>
+      <span class="material-icons-outlined toggle-icon">visibility</span>
+      <span class="toggle-label">ESP</span>
+      <span class="premium-lock premium-feature" data-hack="esp"><span class="lock-icon material-icons">lock</span></span>
+    </label>
+
+    <!-- Color Swap -->
+    <label class="hack-toggle">
+      <input type="checkbox" id="colorToggle" />
+      <span class="toggle-slider"></span>
+      <span class="material-icons-outlined toggle-icon">palette</span>
+      <span class="toggle-label">Color</span>
+      <span class="premium-lock premium-feature" data-hack="color"><span class="lock-icon material-icons">lock</span></span>
+    </label>
+
+    <!-- Jump Bot -->
+    <label class="hack-toggle">
+      <input type="checkbox" id="jumpToggle" />
+      <span class="toggle-slider"></span>
+      <span class="material-icons-outlined toggle-icon">arrow_upward</span>
+      <span class="toggle-label">Jump Bot</span>
+    </label>
+
+    <!-- Ghost Mode -->
+    <label class="hack-toggle">
+      <input type="checkbox" id="ghostToggle" />
+      <span class="toggle-slider"></span>
+      <span class="material-icons-outlined toggle-icon">person_outline</span>
+      <span class="toggle-label">Ghost Mode</span>
+      <span class="premium-lock premium-feature" data-hack="ghost"><span class="lock-icon material-icons">lock</span></span>
+    </label>
+
+    <!-- Anti-Task -->
+    <label class="hack-toggle">
+      <input type="checkbox" id="antitaskToggle" />
+      <span class="toggle-slider"></span>
+      <span class="material-icons-outlined toggle-icon">check_circle</span>
+      <span class="toggle-label">Auto-Task</span>
+      <span class="premium-lock premium-feature" data-hack="antitask"><span class="lock-icon material-icons">lock</span></span>
+    </label>
+  </div>
+
+  <!-- Premium Gate Modal -->
+  <div id="premiumModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closePremium" class="btn-close"><span class="material-icons">close</span></button>
+      <h2>👑 Unlock Premium</h2>
+      <p>Get all hacks and customize your experience.</p>
+
+      <div class="premium-features">
+        <div class="feature-item unlocked">✓ ESP / Fog of War</div>
+        <div class="feature-item locked" data-feature="color">🔒 Color Swap Customization</div>
+        <div class="feature-item locked" data-feature="ghost">👻 Ghost Mode Walking</div>
+        <div class="feature-item locked" data-feature="antitask">✅ Anti-Task Auto Complete</div>
+      </div>
+
+      <!-- Color Picker (Premium) -->
+      <div id="colorPicker" class="hidden">
+        <h4>Pick Your Color:</h4>
+        <div class="color-options">
+          <button data-color="#FF0000" style="background:#FF0000;"></button>
+          <button data-color="#0066FF" style="background:#0066FF;"></button>
+          <button data-color="#00CC44" style="background:#00CC44;"></button>
+          <button data-color="#FF9900" style="background:#FF9900;"></button>
+          <button data-color="#AA33FF" style="background:#AA33FF;"></button>
+          <button data-color="#FFFF00" style="background:#FFFF00;"></button>
+        </div>
+      </div>
+
+      <!-- Speed Slider -->
+      <div id="speedSlider">
+        <h4>Speed: <span id="sliderVal">1.5x</span></h4>
+        <input type="range" min="1.0" max="3.0" step="0.1" value="1.5" id="speedRange" />
+      </div>
+
+      <!-- Upgrade Button -->
+      <button id="upgradeBtn" class="btn-upgrade">Upgrade to Premium — $4.99</button>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom Navigation Bar -->
+<nav class="bottom-nav">
+  <a href="#dashboard" class="nav-item active">
+    <span class="material-icons-outlined">home</span>
+    Dashboard
+  </a>
+  <a href="#hacks" class="nav-item">
+    <span class="material-icons-outlined">tune</span>
+    Hacks
+  </a>
+  <a href="#premium" class="nav-item premium-tab">
+    <span class="material-icons-outlined">diamond</span>
+    Premium
+  </a>
+  <a href="#settings" class="nav-item">
+    <span class="material-icons-outlined">settings</span>
+    Settings
+  </a>
+</nav>
+
+<!-- Notification Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/hacks/speed.js"></script>
+<script src="js/hacks/esp.js"></script>
+<script src="js/hacks/colors.js"></script>
+<script src="js/premium.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
