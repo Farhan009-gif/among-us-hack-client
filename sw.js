@@ -1,16 +1,18 @@
 /* Among Us Hack Client - Service Worker */
-const CACHE_NAME = 'among-us-hack-v1';
+const CACHE_NAME = 'among-us-hack-v2';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/css/style.css',
-  '/js/app.js',
-  '/js/utils.js',
-  '/js/premium.js',
-  '/js/hacks/speed.js',
-  '/js/hacks/esp.js',
-  '/js/hacks/colors.js'
+  './',
+  './index.html',
+  './manifest.json',
+  './css/style.css',
+  './js/app.js',
+  './js/utils.js',
+  './js/premium.js',
+  './js/hacks/speed.js',
+  './js/hacks/esp.js',
+  './js/hacks/colors.js',
+  './assets/icon-192.png',
+  './assets/icon-512.png'
 ];
 
 // Install event - cache all assets
@@ -47,9 +49,6 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then((response) => {
       const fetchPromise = fetch(event.request).then((networkResponse) => {
         // Cache new responses on the fly
-        if (response && response.ok) {
-          return response;
-        }
         const clone = networkResponse.clone();
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, clone);
@@ -58,7 +57,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Offline fallback
         if (event.request.destination === 'document') {
-          return caches.match('/index.html');
+          return caches.match('./index.html');
         }
       });
       
